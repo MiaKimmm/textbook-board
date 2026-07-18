@@ -1,0 +1,1373 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>미래엔 영어 세정점 · 교재 배정보드</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111113'/%3E%3Ccircle cx='22' cy='24' r='6' fill='%23FF6F91'/%3E%3Ccircle cx='42' cy='24' r='6' fill='%234FD8EB'/%3E%3Ccircle cx='22' cy='42' r='6' fill='%234ADE80'/%3E%3Ccircle cx='42' cy='42' r='6' fill='%23B18CFF'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#F5F5F7;
+    --card:#FFFFFF;
+    --text:#1D1D1F;
+    --text-soft:#6E6E73;
+    --text-faint:#9B9BA1;
+    --border:rgba(0,0,0,0.08);
+    --border-strong:rgba(0,0,0,0.13);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 2px 6px rgba(0,0,0,0.05), 0 8px 20px rgba(0,0,0,0.04);
+    --radius-lg:18px;
+    --radius-md:13px;
+    --radius-sm:9px;
+    --accent:#0071E3;
+    --danger:#E0453C;
+    --warn:#C77A00;
+
+    --phonics:#FF6F91; --phonics-bg:#FFE3E9; --phonics-tx:#99204B;
+    --story:#B18CFF; --story-bg:#EFE7FF; --story-tx:#5B3FA0;
+    --reading:#4FD8EB; --reading-bg:#DFF7FA; --reading-tx:#147480;
+    --grammar:#4ADE80; --grammar-bg:#E0F9E9; --grammar-tx:#1F7A47;
+    --speaking:#FFB86B; --speaking-bg:#FFEEDD; --speaking-tx:#92500A;
+    --writing:#7FC4FF; --writing-bg:#E3F3FF; --writing-tx:#1A5C99;
+    --middle:#FFE066; --middle-bg:#FFF7D9; --middle-tx:#8A6D00;
+    --high:#9FB3C8; --high-bg:#EDF1F5; --high-tx:#3E5266;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  header.top{
+    padding:clamp(18px,3vw,26px) clamp(16px,4vw,40px);
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    border-bottom:1px solid var(--border); background:rgba(255,255,255,0.7); backdrop-filter:blur(20px);
+    position:sticky; top:0; z-index:20;
+  }
+  header.top h1{ font-size:clamp(18px,2.6vw,24px); margin:0; font-weight:700; letter-spacing:-0.02em; }
+  .top-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .search-box{ display:flex; align-items:center; gap:6px; background:var(--card); border:1px solid var(--border-strong); border-radius:999px; padding:7px 12px; min-width:170px; }
+  .search-box input{ border:none; outline:none; font-size:13px; font-family:inherit; background:transparent; width:100%; color:var(--text); }
+  .search-box .icon{ font-size:12px; color:var(--text-faint); }
+
+  .inv-btn{ position:relative; display:flex; align-items:center; gap:6px; border:1px solid var(--border-strong); background:var(--card); border-radius:999px; padding:7px 13px; font-size:13px; font-weight:600; cursor:pointer; color:var(--text); }
+  .inv-btn:hover{ box-shadow:var(--shadow-sm); }
+  .inv-btn .dot{ position:absolute; top:-2px; right:-2px; width:9px; height:9px; border-radius:50%; background:var(--danger); display:none; }
+  .inv-btn.has-low .dot{ display:block; }
+
+  .wrap{ display:grid; grid-template-columns:300px 1fr; gap:20px; padding:20px clamp(14px,4vw,40px) 60px; max-width:1420px; margin:0 auto; align-items:start; }
+  @media (max-width:920px){ .wrap{ grid-template-columns:1fr; } }
+
+  .panel{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); padding:18px; }
+  .panel-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:2px; }
+  .panel h2{ font-size:clamp(15px,1.6vw,17px); margin:0; font-weight:700; letter-spacing:-0.01em; }
+  .panel .sub{ font-size:clamp(11.5px,1.1vw,12.5px); color:var(--text-soft); margin:0 0 14px; line-height:1.5; }
+  .sidebar{ position:sticky; top:88px; max-height:calc(100vh - 104px); overflow-y:auto; }
+
+  .sort-toggle{
+    display:flex; align-items:center; gap:5px; border:1px solid var(--border-strong); background:var(--card); border-radius:999px;
+    padding:5px 11px; font-size:11.5px; color:var(--text-soft); cursor:pointer; white-space:nowrap; transition:background .12s ease, color .12s ease;
+  }
+  .sort-toggle.active{ background:var(--text); color:#fff; border-color:var(--text); }
+  .sort-toggle:hover{ box-shadow:var(--shadow-sm); }
+
+  .cat-group{ margin-bottom:14px; }
+  .cat-group-head{ display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; margin-bottom:8px; color:var(--text-soft); cursor:pointer; user-select:none; }
+  .cat-group-head .count{ font-weight:400; color:var(--text-faint); }
+  .cat-group-head .chev{ margin-left:auto; font-size:10px; color:var(--text-faint); transition:transform .15s ease; }
+  .cat-group-head .chev.collapsed{ transform:rotate(-90deg); }
+  .cat-dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+
+  .book-list{ display:flex; flex-direction:column; gap:6px; }
+  .book-chip{
+    display:flex; align-items:center; border-radius:var(--radius-sm); font-size:13px; font-weight:500;
+    cursor:grab; user-select:none; transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; overflow:hidden; border:1px solid transparent;
+  }
+  .book-chip:active{ cursor:grabbing; }
+  .book-chip:hover{ transform:translateY(-1px); box-shadow:var(--shadow-sm); }
+  .book-chip .grip{ flex-shrink:0; color:rgba(0,0,0,0.28); font-size:10px; padding-left:7px; letter-spacing:-1px; }
+  .book-chip .swatch{ width:8px; align-self:stretch; flex-shrink:0; }
+  .book-chip .name{ flex:1; padding:9px 10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .book-chip .del{ background:none; border:none; cursor:pointer; font-size:13px; padding:0 10px; line-height:1; opacity:.4; }
+  .book-chip .del:hover{ opacity:1; color:var(--danger); }
+  .book-chip.dragging{ opacity:.35; }
+  .book-chip.insert-before{ box-shadow: inset 0 2px 0 var(--accent); }
+  .book-chip.insert-after{ box-shadow: inset 0 -2px 0 var(--accent); }
+
+  .empty-hint{ font-size:12px; color:var(--text-faint); padding:10px 2px; text-align:center; border:1px dashed var(--border-strong); border-radius:var(--radius-sm); }
+
+  .add-row{ display:flex; flex-direction:column; gap:6px; margin-top:6px; }
+  .add-row .fields{ display:flex; gap:6px; }
+  .add-row select{ padding:9px 8px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); font-size:12.5px; font-family:inherit; background:#FBFBFC; max-width:96px; }
+  .add-row input{ flex:1; padding:9px 10px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); font-size:13.5px; font-family:inherit; background:#FBFBFC; min-width:0; }
+  .add-row input:focus, .add-row select:focus{ outline:2px solid rgba(0,113,227,0.18); border-color:var(--accent); }
+  .add-row button{ padding:9px 14px; border-radius:var(--radius-sm); border:none; background:var(--accent); color:#fff; font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap; }
+  .add-row button:hover{ background:#0064cf; }
+
+  .status{ font-size:11.5px; color:var(--text-faint); text-align:right; padding:2px 4px 0; min-height:16px; }
+  .reset-link{ background:none; border:none; color:var(--text-faint); text-decoration:underline; cursor:pointer; font-size:11.5px; padding:0; }
+  .reset-link:hover{ color:var(--danger); }
+  .storage-note{ font-size:11px; color:var(--text-faint); line-height:1.5; margin-top:12px; padding-top:10px; border-top:1px solid var(--border); }
+
+  .grades{ display:flex; flex-direction:column; gap:16px; }
+  .grade-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); overflow:hidden; }
+  .grade-head{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; gap:10px; flex-wrap:wrap; }
+  .grade-head h3{ margin:0; font-size:clamp(15px,1.8vw,17px); font-weight:700; cursor:pointer; user-select:none; letter-spacing:-0.01em; }
+  .grade-head .count{ font-size:12px; color:var(--text-soft); margin-left:6px; font-weight:400; }
+  .grade-head .right{ display:flex; align-items:center; gap:8px; }
+  .grade-head .del-grade{ background:none; border:none; color:var(--text-faint); cursor:pointer; font-size:12.5px; }
+  .grade-head .del-grade:hover{ color:var(--danger); }
+  .grade-head .collapse-btn{ background:none; border:1px solid var(--border-strong); border-radius:8px; width:26px; height:26px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text-soft); font-size:11px; }
+  .grade-head .collapse-btn:hover{ background:var(--bg); }
+  .grade-head .collapse-btn .chev{ display:inline-block; transition:transform .15s ease; }
+  .grade-head .collapse-btn .chev.collapsed{ transform:rotate(-90deg); }
+
+  .students{ padding:2px 18px 14px; display:flex; flex-direction:column; gap:12px; min-height:12px; }
+  .students.students-drop-hover{ background:#FAFAFB; }
+
+  .student{ border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 13px 13px; background:#FCFCFD; transition:opacity .12s ease, box-shadow .12s ease; }
+  .student.dragging{ opacity:.4; }
+  .student.insert-before{ box-shadow: inset 0 3px 0 var(--accent); }
+  .student.insert-after{ box-shadow: inset 0 -3px 0 var(--accent); }
+  .student-header{ display:flex; align-items:center; gap:7px; margin-bottom:9px; flex-wrap:wrap; }
+  .student-header .grip{ cursor:grab; color:var(--text-faint); font-size:13px; letter-spacing:-2px; padding:2px 3px; }
+  .student-header .grip:active{ cursor:grabbing; }
+  .student-header .grip.disabled{ opacity:.25; cursor:not-allowed; }
+  .student-header .name{ font-weight:700; font-size:14.5px; letter-spacing:-0.01em; cursor:pointer; }
+  .student-header .unassigned{ font-size:10px; font-weight:700; color:var(--warn); background:#FFF3DF; border-radius:999px; padding:2px 7px; }
+  .student-header .del-student{ margin-left:auto; background:none; border:none; color:var(--text-faint); cursor:pointer; font-size:14px; }
+  .student-header .del-student:hover{ color:var(--danger); }
+
+  .main-sub-row{ display:flex; gap:8px; margin-bottom:9px; flex-wrap:wrap; }
+  .msbox{ flex:1; min-width:140px; border:1.5px dashed var(--border-strong); border-radius:var(--radius-sm); padding:7px 9px; background:#F7F7F8; transition:border-color .12s ease, background .12s ease; }
+  .msbox.drop-ok{ border-color:var(--accent); background:rgba(0,113,227,0.07); }
+  .msbox .box-label{ font-size:10px; font-weight:700; color:var(--text-faint); margin-bottom:6px; letter-spacing:.03em; text-transform:uppercase; }
+  .msbox .chips{ display:flex; flex-wrap:wrap; gap:5px; min-height:24px; align-content:flex-start; }
+  .msbox .placeholder{ font-size:11.5px; color:var(--text-faint); }
+
+  .book-badge{ display:flex; align-items:center; gap:5px; padding:3px 4px 3px 8px; border-radius:8px; font-size:11.5px; font-weight:600; cursor:grab; }
+  .book-badge:active{ cursor:grabbing; }
+  .book-badge .role{ font-size:9px; font-weight:700; opacity:.65; letter-spacing:.02em; }
+  .book-badge button{ background:none; border:none; cursor:pointer; font-size:11px; line-height:1; padding:0 3px; opacity:.5; }
+  .book-badge button:hover{ opacity:1; }
+  .book-badge button.complete-btn:hover{ color:#1F7A47; }
+  .book-badge button.remove-btn:hover{ color:var(--danger); }
+  .book-badge.done-badge{ opacity:.65; text-decoration:line-through; text-decoration-color:rgba(0,0,0,0.25); cursor:default; }
+  .book-badge.dragging{ opacity:.35; }
+
+  .book-badge.cat-phonics{ background:var(--phonics-bg); color:var(--phonics-tx); }
+  .book-badge.cat-story{ background:var(--story-bg); color:var(--story-tx); }
+  .book-badge.cat-reading{ background:var(--reading-bg); color:var(--reading-tx); }
+  .book-badge.cat-grammar{ background:var(--grammar-bg); color:var(--grammar-tx); }
+  .book-badge.cat-speaking{ background:var(--speaking-bg); color:var(--speaking-tx); }
+  .book-badge.cat-writing{ background:var(--writing-bg); color:var(--writing-tx); }
+  .book-badge.cat-middle{ background:var(--middle-bg); color:var(--middle-tx); }
+  .book-badge.cat-high{ background:var(--high-bg); color:var(--high-tx); }
+
+  .no-active{ font-size:11.5px; color:var(--text-faint); padding:2px 2px; }
+
+  .memo-panel, .completed-panel{ margin-top:9px; padding-top:9px; border-top:1px dashed var(--border); }
+  .memo-panel textarea{
+    width:100%; min-height:56px; resize:vertical; border:1px solid var(--border-strong); border-radius:var(--radius-sm);
+    padding:8px 9px; font-family:inherit; font-size:12.5px; color:var(--text); background:#FBFBFC;
+  }
+  .memo-panel textarea:focus{ outline:2px solid rgba(0,113,227,0.18); border-color:var(--accent); }
+
+  .completed-nav{ display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:8px; }
+  .completed-nav button.arrow{ background:none; border:1px solid var(--border-strong); border-radius:7px; width:26px; height:26px; cursor:pointer; font-size:13px; color:var(--text-soft); }
+  .completed-nav button.arrow:hover{ background:var(--bg); }
+  .completed-nav .ym-label{ font-size:12.5px; font-weight:700; min-width:84px; text-align:center; }
+  .month-tabs{ display:flex; flex-wrap:wrap; gap:4px; justify-content:center; margin-bottom:10px; }
+  .month-tabs button{ font-size:10.5px; padding:4px 7px; border-radius:7px; border:1px solid var(--border-strong); background:#fff; cursor:pointer; color:var(--text-soft); }
+  .month-tabs button.active{ background:var(--text); color:#fff; border-color:var(--text); }
+  .completed-list{ min-height:28px; border:1.5px dashed var(--border-strong); border-radius:var(--radius-sm); padding:7px 9px; display:flex; flex-wrap:wrap; gap:5px; background:#F7F7F8; transition:border-color .12s ease, background .12s ease; }
+  .completed-list.drop-ok{ border-color:var(--accent); background:rgba(0,113,227,.07); }
+
+  .add-student-row{ display:flex; gap:6px; padding:6px 18px 16px; }
+  .add-student-row input{ flex:1; padding:8px 10px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); font-size:13px; font-family:inherit; }
+  .add-student-row button{ padding:8px 12px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); background:#fff; font-size:12.5px; cursor:pointer; color:var(--text-soft); }
+  .add-student-row button:hover{ background:var(--bg); }
+
+  .add-grade-panel{ margin-top:16px; display:flex; gap:8px; }
+  .add-grade-panel input{ flex:1; padding:10px 12px; border-radius:var(--radius-sm); border:1px dashed var(--border-strong); font-size:13.5px; font-family:inherit; background:transparent; }
+  .add-grade-panel button{ padding:10px 16px; border-radius:var(--radius-sm); border:none; background:var(--text); color:#fff; font-weight:600; cursor:pointer; font-size:13px; }
+
+  /* ---- inventory drawer ---- */
+  .inv-drawer{
+    position:fixed; top:0; right:0; height:100vh; width:min(360px, 92vw);
+    background:var(--card); border-left:1px solid var(--border); box-shadow:var(--shadow-md);
+    z-index:40; transform:translateX(100%); transition:transform .22s ease; display:flex; flex-direction:column;
+  }
+  .inv-drawer.open{ transform:translateX(0); }
+  .inv-drawer-head{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid var(--border); flex-shrink:0; }
+  .inv-drawer-head h2{ margin:0; font-size:16px; font-weight:700; }
+  .inv-drawer-head button{ background:none; border:none; font-size:18px; cursor:pointer; color:var(--text-faint); }
+  .inv-drawer-body{ padding:14px 18px; overflow-y:auto; flex:1; }
+  .inv-section{ margin-bottom:20px; }
+  .inv-section h4{ font-size:12px; font-weight:700; color:var(--text-soft); margin:0 0 8px; }
+  .inv-drawer textarea{ width:100%; min-height:70px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); padding:8px 9px; font-family:inherit; font-size:12.5px; resize:vertical; }
+  .inv-drawer .parse-btn{ margin-top:6px; padding:8px 12px; border-radius:var(--radius-sm); border:none; background:var(--accent); color:#fff; font-weight:600; font-size:12.5px; cursor:pointer; }
+
+  .inv-preview{ margin-top:10px; padding:10px; border-radius:var(--radius-sm); background:var(--bg); }
+  .inv-preview .preview-title{ font-size:11.5px; font-weight:700; color:var(--text-soft); margin-bottom:8px; }
+  .inv-preview-row{ display:flex; align-items:center; gap:6px; margin-bottom:6px; font-size:12px; flex-wrap:wrap; }
+  .inv-preview-row input[type=text]{ flex:1; min-width:70px; padding:5px 7px; border-radius:6px; border:1px solid var(--border-strong); font-size:11.5px; font-family:inherit; }
+  .inv-preview-row input[type=number]{ width:52px; padding:5px 5px; border-radius:6px; border:1px solid var(--border-strong); font-size:11.5px; font-family:inherit; }
+  .inv-preview-row select{ font-size:11px; padding:5px 6px; border-radius:6px; border:1px solid var(--border-strong); }
+  .inv-preview-row .tag-existing{ font-size:10.5px; padding:4px 8px; border-radius:6px; background:#fff; color:var(--text-soft); border:1px solid var(--border-strong); white-space:nowrap; }
+  .inv-preview-row .row-del{ background:none; border:none; color:var(--text-faint); cursor:pointer; font-size:13px; }
+  .inv-preview-row .row-del:hover{ color:var(--danger); }
+  .inv-preview-actions{ display:flex; gap:8px; margin-top:10px; }
+  .inv-preview-actions .confirm-btn{ padding:8px 14px; border-radius:var(--radius-sm); border:none; background:var(--accent); color:#fff; font-weight:600; font-size:12.5px; cursor:pointer; }
+  .inv-preview-actions .cancel-btn{ padding:8px 14px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); background:#fff; color:var(--text-soft); font-size:12.5px; cursor:pointer; }
+
+  .low-banner{ background:#FFF3DF; border:1px solid #F3D9A0; color:var(--warn); border-radius:var(--radius-sm); padding:9px 11px; font-size:12px; margin-bottom:16px; line-height:1.6; }
+  .low-banner .k-btn{ margin-top:7px; padding:7px 11px; border-radius:7px; border:none; background:var(--warn); color:#fff; font-size:11.5px; cursor:pointer; }
+
+  .inv-item{ display:flex; align-items:center; gap:8px; padding:7px 8px; border-radius:var(--radius-sm); cursor:grab; margin-bottom:5px; }
+  .inv-item:active{ cursor:grabbing; }
+  .inv-item .swatch{ width:8px; align-self:stretch; border-radius:3px; flex-shrink:0; }
+  .inv-item .name{ flex:1; font-size:12.5px; }
+  .inv-item .stock{ font-size:12.5px; font-weight:700; min-width:20px; text-align:center; }
+  .inv-item .stock.low{ color:var(--danger); }
+  .inv-item .stock-btn{ background:none; border:1px solid var(--border-strong); border-radius:6px; width:20px; height:20px; font-size:12px; cursor:pointer; line-height:1; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>미래엔 영어 세정점 — 교재 배정보드</h1>
+  <div class="top-actions">
+    <div class="search-box">
+      <span class="icon">🔍</span>
+      <input id="searchInput" type="text" placeholder="학생 이름 검색" />
+    </div>
+    <button class="inv-btn" id="invToggleBtn"><span>📦 재고 현황</span><span class="dot" id="invDot"></span></button>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="panel sidebar">
+    <div class="panel-head">
+      <h2>교재 목록</h2>
+      <button class="sort-toggle" id="bookSortToggle">이름순</button>
+    </div>
+    <p class="sub">칩을 학생 카드의 <b>주교재</b> 또는 <b>부교재</b> 칸에 끌어다 놓으면 배정돼요. 배정된 칩끼리도 두 칸 사이로 다시 끌어서 옮길 수 있어요.</p>
+    <div id="bookGroups"></div>
+    <div class="add-row">
+      <div class="fields">
+        <select id="newBookCategory"></select>
+        <input id="newBookInput" type="text" placeholder="교재명 입력" maxlength="40" />
+      </div>
+      <button id="addBookBtn">교재 추가</button>
+    </div>
+    <div class="status" id="statusLine">&nbsp;</div>
+    <button class="reset-link" id="resetBtn">전체 초기화</button>
+    <p class="storage-note" id="storageNote"></p>
+  </aside>
+
+  <main>
+    <div class="grades" id="gradesWrap"></div>
+    <div class="panel add-grade-panel" style="margin-top:16px;">
+      <input id="newGradeInput" type="text" placeholder="학년 그룹 추가 (예: 중1)" maxlength="20" />
+      <button id="addGradeBtn">학년 추가</button>
+    </div>
+  </main>
+</div>
+
+<div class="inv-drawer" id="invDrawer">
+  <div class="inv-drawer-head">
+    <h2>교재 재고 현황</h2>
+    <button id="invCloseBtn">✕</button>
+  </div>
+  <div class="inv-drawer-body" id="invBody"></div>
+</div>
+
+<script>
+(function(){
+  const RTDB_URL = 'https://sejeong-book-default-rtdb.asia-southeast1.firebasedatabase.app/textbook-board.json';
+  const STORE_KEY = 'textbook-board-apple-v4';
+  const LOW_STOCK = 3;
+  const MONTH_NAMES = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  const uid = () => Math.random().toString(36).slice(2,9);
+  const koSort = (a,b) => a.localeCompare(b, 'ko');
+  const pad2 = n => String(n).padStart(2,'0');
+  const monthKeyOf = (year, month) => `${year}-${pad2(month)}`;
+  const monthKey = (d = new Date()) => monthKeyOf(d.getFullYear(), d.getMonth()+1);
+
+  const CATEGORIES = [
+    {id:'phonics', label:'파닉스', hint:'파닉'},
+    {id:'story', label:'스토리', hint:'스토'},
+    {id:'reading', label:'리딩', hint:'리딩'},
+    {id:'grammar', label:'그래머', hint:'그래'},
+    {id:'speaking', label:'스피킹', hint:'스피'},
+    {id:'writing', label:'라이팅', hint:'라이'},
+    {id:'middle', label:'중학', hint:'중학'},
+    {id:'high', label:'고등', hint:'고등'},
+  ];
+  const catById = id => CATEGORIES.find(c=>c.id===id) || CATEGORIES[0];
+
+  function emptyCats(){
+    const obj = {};
+    CATEGORIES.forEach(c=>{ obj[c.id] = {main:null, subs:[], done:[]}; });
+    return obj;
+  }
+
+  const defaultData = () => ({
+    bookSortByName: false,
+    collapsedCategories: {},
+    textbooks: [],
+    grades: [
+      {id: uid(), name:'초1', students:[], sortByName:false, collapsed:false},
+      {id: uid(), name:'초2', students:[], sortByName:false, collapsed:false},
+      {id: uid(), name:'초3', students:[], sortByName:false, collapsed:false},
+      {id: uid(), name:'초4', students:[], sortByName:false, collapsed:false},
+      {id: uid(), name:'초5', students:[], sortByName:false, collapsed:false},
+      {id: uid(), name:'초6', students:[], sortByName:false, collapsed:false},
+      {id: uid(), name:'중1', students:[], sortByName:false, collapsed:false},
+      {id: uid(), name:'중2', students:[], sortByName:false, collapsed:false},
+      {id: uid(), name:'중3', students:[], sortByName:false, collapsed:false},
+    ]
+  });
+
+  let data = defaultData();
+  const statusLine = document.getElementById('statusLine');
+  let storageMode = 'firebase'; // 'firebase' | 'claude' | 'local'
+  let searchTerm = '';
+  let invOpen = false;
+  let previewOrders = null; // array while a preview is pending confirmation
+  const openCompleted = new Set();
+  const openMemo = new Set();
+  const viewMonthState = new Map(); // studentId -> {year, month} (1-12) | {year, month:'legacy'}
+  let memoSaveTimer = null;
+
+  function setStatus(msg){
+    statusLine.textContent = msg;
+    if(msg){ setTimeout(()=>{ if(statusLine.textContent===msg) statusLine.textContent=''; }, 1800); }
+  }
+
+  const hasClaudeStorage = () => (typeof window.storage !== 'undefined' && window.storage && typeof window.storage.get === 'function');
+
+  async function fallbackGet(key){
+    if(hasClaudeStorage()){
+      storageMode = 'claude';
+      try{ return await window.storage.get(key, false); } catch(e){ return null; }
+    }
+    storageMode = 'local';
+    try{ const raw = window.localStorage.getItem(key); return raw ? {key, value: raw, shared:false} : null; }
+    catch(e){ return null; }
+  }
+  async function fallbackSet(key, value){
+    if(hasClaudeStorage()){
+      storageMode = 'claude';
+      try{ return await window.storage.set(key, value, false); } catch(e){ return null; }
+    }
+    storageMode = 'local';
+    try{ window.localStorage.setItem(key, value); return {key, value, shared:false}; }
+    catch(e){ return null; }
+  }
+
+  function withTimeout(promise, ms, label){
+    return Promise.race([
+      promise,
+      new Promise((_, reject)=> setTimeout(()=> reject(new Error(label+' timed out')), ms)),
+    ]);
+  }
+
+  async function rtdbGet(){
+    const res = await fetch(RTDB_URL);
+    if(!res.ok) throw new Error('RTDB GET failed: ' + res.status);
+    return await res.json(); // stored value (a JSON string), or null if never set
+  }
+  async function rtdbSet(value){
+    const res = await fetch(RTDB_URL, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(value),
+    });
+    if(!res.ok) throw new Error('RTDB SET failed: ' + res.status);
+  }
+
+  async function storageGet(key){
+    try{
+      const value = await withTimeout(rtdbGet(), 4000, 'Firebase get');
+      storageMode = 'firebase';
+      return value ? {key, value, shared:true} : null;
+    }catch(e){
+      console.warn('[storage] Firebase GET failed, using fallback:', e);
+    }
+    return await fallbackGet(key);
+  }
+  async function storageSet(key, value){
+    try{
+      await withTimeout(rtdbSet(value), 4000, 'Firebase set');
+      storageMode = 'firebase';
+      return {key, value, shared:true};
+    }catch(e){
+      console.warn('[storage] Firebase SET failed, using fallback:', e);
+    }
+    return await fallbackSet(key, value);
+  }
+
+  function migrateStudent(s){
+    if(typeof s.name !== 'string') s.name = '이름 없음';
+    if(typeof s.memo !== 'string') s.memo = '';
+    delete s.showExtra;
+    if(!s.cats){
+      if(s.books && !Array.isArray(s.books)){
+        const cats = emptyCats();
+        CATEGORIES.forEach(c=>{
+          const old = s.books[c.id];
+          if(old){
+            cats[c.id].main = old.main || null;
+            cats[c.id].subs = Array.isArray(old.subs) ? old.subs.slice() : [];
+            cats[c.id].done = (Array.isArray(old.done) ? old.done : []).map(item=>{
+              if(typeof item === 'string') return {name:item, category:c.id, month:'이전 기록'};
+              return {name:item.name, category:c.id, month: item.month || '이전 기록'};
+            });
+          }
+        });
+        s.cats = cats;
+      }else{
+        s.cats = emptyCats();
+      }
+      delete s.books;
+    }else{
+      CATEGORIES.forEach(c=>{
+        if(!s.cats[c.id]) s.cats[c.id] = {main:null, subs:[], done:[]};
+        const entry = s.cats[c.id];
+        if(!Array.isArray(entry.subs)) entry.subs = [];
+        if(!Array.isArray(entry.done)) entry.done = [];
+        entry.done = entry.done.map(item=>{
+          if(typeof item === 'string') return {name:item, category:c.id, month:'이전 기록'};
+          return {name:item.name, category:item.category||c.id, month:item.month||'이전 기록'};
+        });
+      });
+    }
+  }
+
+  async function load(){
+    try{
+      const res = await storageGet(STORE_KEY);
+      if(res && res.value){
+        const parsed = JSON.parse(res.value);
+        if(parsed && parsed.grades) data = parsed;
+      }
+    }catch(e){ /* use defaults */ }
+
+    try{
+      if(typeof data.bookSortByName !== 'boolean') data.bookSortByName = false;
+      if(!data.collapsedCategories || typeof data.collapsedCategories !== 'object') data.collapsedCategories = {};
+      if(!Array.isArray(data.textbooks)) data.textbooks = [];
+      data.textbooks.forEach(b=>{ if(typeof b.stock !== 'number' || isNaN(b.stock)) b.stock = 0; });
+      if(!Array.isArray(data.grades)) data.grades = [];
+      data.grades.forEach(g=>{
+        if(typeof g.sortByName !== 'boolean') g.sortByName = false;
+        if(typeof g.collapsed !== 'boolean') g.collapsed = false;
+        if(!Array.isArray(g.students)) g.students = [];
+        g.students.forEach(migrateStudent);
+      });
+    }catch(e){
+      console.warn('data shape unexpected, resetting to defaults:', e);
+      data = defaultData();
+    }
+
+    populateCategorySelect();
+    updateStorageNote();
+    render();
+  }
+
+  async function save(){
+    try{
+      const result = await storageSet(STORE_KEY, JSON.stringify(data));
+      setStatus(result ? '저장됨' : '저장 실패 — 다시 시도해주세요');
+    }catch(e){ setStatus('저장 실패 — 다시 시도해주세요'); }
+    updateStorageNote();
+  }
+
+  function updateStorageNote(){
+    const note = document.getElementById('storageNote');
+    if(!note) return;
+    if(storageMode === 'firebase'){
+      note.textContent = '☁️ Firebase에 실시간 저장 중이에요. 어떤 컴퓨터에서 이 파일을 열어도 같은 데이터가 보여요.';
+    }else if(storageMode === 'claude'){
+      note.textContent = '데이터는 이 화면 전용 저장 공간에 자동 저장돼요 (Firebase 연결 실패 — 다른 사람에게는 공유되지 않아요).';
+    }else{
+      note.textContent = '⚠️ 지금은 이 브라우저(기기)에만 저장되고 있어요 (Firebase 연결 실패). 다른 컴퓨터에서는 보이지 않아요.';
+    }
+  }
+
+  function populateCategorySelect(){
+    const sel = document.getElementById('newBookCategory');
+    sel.innerHTML = CATEGORIES.map(c=>`<option value="${c.id}">${c.label}</option>`).join('');
+  }
+
+  function render(){ renderBooks(); renderGrades(); renderInventory(); }
+
+  // ---------------- Sidebar: books ----------------
+
+  function renderBooks(){
+    const toggle = document.getElementById('bookSortToggle');
+    toggle.classList.toggle('active', data.bookSortByName);
+    toggle.onclick = ()=>{ data.bookSortByName = !data.bookSortByName; render(); save(); };
+
+    const wrap = document.getElementById('bookGroups');
+    wrap.innerHTML = '';
+    CATEGORIES.forEach(cat=>{
+      const group = document.createElement('div');
+      group.className = 'cat-group';
+
+      const rawBooks = data.textbooks.filter(b=>b.category===cat.id);
+      const books = data.bookSortByName ? [...rawBooks].sort((a,b)=>koSort(a.name,b.name)) : rawBooks;
+      const isCollapsed = !!data.collapsedCategories[cat.id];
+
+      const head = document.createElement('div');
+      head.className = 'cat-group-head';
+      head.innerHTML = `<span class="cat-dot" style="background:var(--${cat.id})"></span><span>${cat.label}</span><span class="count">(${books.length})</span><span class="chev${isCollapsed?' collapsed':''}">▾</span>`;
+      head.addEventListener('click', ()=>{ data.collapsedCategories[cat.id] = !isCollapsed; render(); save(); });
+      group.appendChild(head);
+
+      const list = document.createElement('div');
+      list.className = 'book-list';
+      if(isCollapsed) list.style.display = 'none';
+
+      if(books.length===0){
+        const hint = document.createElement('div');
+        hint.className = 'empty-hint';
+        hint.textContent = `${cat.label} 교재를 추가해주세요`;
+        list.appendChild(hint);
+      }else{
+        books.forEach(book=>{
+          const chip = document.createElement('div');
+          chip.className = 'book-chip';
+          chip.style.background = `var(--${cat.id}-bg)`;
+          chip.draggable = true;
+          chip.dataset.bookId = book.id;
+          chip.innerHTML = `${data.bookSortByName ? '' : '<span class="grip">⠿⠿</span>'}<span class="swatch" style="background:var(--${cat.id})"></span><span class="name" style="color:var(--${cat.id}-tx)">${escapeHtml(book.name)}</span><button class="del" title="교재 삭제">✕</button>`;
+
+          chip.addEventListener('dragstart', (e)=>{
+            const payload = JSON.stringify({name: book.name, category: book.category, bookId: book.id});
+            e.dataTransfer.setData('text/x-book-' + book.category, payload);
+            e.dataTransfer.setData('application/x-book', payload);
+            e.dataTransfer.setData('text/plain', payload);
+            chip.classList.add('dragging');
+          });
+          chip.addEventListener('dragend', ()=> chip.classList.remove('dragging'));
+
+          if(!data.bookSortByName){
+            chip.addEventListener('dragover', (e)=>{
+              const mime = 'text/x-book-' + cat.id;
+              if(!e.dataTransfer.types.includes(mime)) return;
+              e.preventDefault();
+              const rect = chip.getBoundingClientRect();
+              const before = (e.clientY - rect.top) < rect.height/2;
+              chip.classList.toggle('insert-before', before);
+              chip.classList.toggle('insert-after', !before);
+            });
+            chip.addEventListener('dragleave', ()=> chip.classList.remove('insert-before','insert-after'));
+            chip.addEventListener('drop', (e)=>{
+              const mime = 'text/x-book-' + cat.id;
+              if(!e.dataTransfer.types.includes(mime)) return;
+              e.preventDefault();
+              const before = chip.classList.contains('insert-before');
+              chip.classList.remove('insert-before','insert-after');
+              let payload;
+              try{ payload = JSON.parse(e.dataTransfer.getData(mime)); }catch(err){ return; }
+              if(!payload || payload.bookId === book.id) return;
+              reorderBook(payload.bookId, book.id, before);
+              render(); save();
+            });
+          }
+
+          chip.querySelector('.del').addEventListener('click', ()=>{
+            data.textbooks = data.textbooks.filter(b=>b.id!==book.id);
+            render(); save();
+          });
+          list.appendChild(chip);
+        });
+      }
+      group.appendChild(list);
+      wrap.appendChild(group);
+    });
+  }
+
+  function reorderBook(draggedId, targetId, before){
+    const arr = data.textbooks;
+    const fromIdx = arr.findIndex(b=>b.id===draggedId);
+    if(fromIdx === -1) return;
+    const [item] = arr.splice(fromIdx,1);
+    let toIdx = arr.findIndex(b=>b.id===targetId);
+    if(toIdx === -1){ arr.push(item); return; }
+    if(!before) toIdx += 1;
+    arr.splice(toIdx, 0, item);
+  }
+
+  function findBookByName(name, category){
+    return data.textbooks.find(b=> b.category===category && b.name.toLowerCase()===name.toLowerCase());
+  }
+
+  // ---------------- Inventory drawer ----------------
+
+  function parseOrderLine(line){
+    const m = line.match(/^(.*?)[\s]+(\d+)\s*(?:권|개)?$/);
+    if(m) return {name: m[1].trim(), qty: parseInt(m[2],10) || 1};
+    return {name: line.trim(), qty: 1};
+  }
+
+  // Add or edit entries here so titles like "Story Town 1-1" or "Reading Town 70-1"
+  // (as they appear on order sheets) get the right category when they're brand new.
+  const SERIES_KEYWORDS = [
+    {kw:'story town', cat:'story'},
+    {kw:'reading town', cat:'reading'},
+    {kw:'reading', cat:'reading'},
+    {kw:'phonics', cat:'phonics'},
+    {kw:'grammar', cat:'grammar'},
+    {kw:'speaking', cat:'speaking'},
+    {kw:'writing', cat:'writing'},
+  ];
+
+  function inferCategory(name){
+    const lower = name.toLowerCase();
+    for(const {kw, cat} of SERIES_KEYWORDS){ if(lower.includes(kw)) return cat; }
+    return CATEGORIES[0].id;
+  }
+
+  // Matches an order line like "Story Town 1-1" to an existing textbook registered
+  // simply as "1-1" — exact match first, then falls back to "line ends with the
+  // existing book's name" so a longer order-sheet title still finds the right book.
+  function findBestMatch(name){
+    const lower = name.toLowerCase().trim();
+    const exact = data.textbooks.find(b=> b.name.toLowerCase() === lower);
+    if(exact) return exact;
+    const candidates = data.textbooks.filter(b=>{
+      const bn = b.name.toLowerCase();
+      return lower.endsWith(bn) || lower.includes(' ' + bn) || lower.includes(bn + ' ');
+    });
+    if(candidates.length){
+      candidates.sort((a,b)=> b.name.length - a.name.length);
+      return candidates[0];
+    }
+    return null;
+  }
+
+  function renderInventory(){
+    const lowItems = data.textbooks.filter(b=> b.stock <= LOW_STOCK);
+    document.getElementById('invToggleBtn').classList.toggle('has-low', lowItems.length > 0);
+
+    const body = document.getElementById('invBody');
+    body.innerHTML = '';
+
+    // 1) order intake
+    const orderSection = document.createElement('div');
+    orderSection.className = 'inv-section';
+    orderSection.innerHTML = `<h4>새로 주문한 교재 입력</h4>`;
+    const ta = document.createElement('textarea');
+    ta.placeholder = '한 줄에 한 권씩 입력하세요\n예)\n리딩게이트 3\n파닉스몬스터 5권';
+    ta.id = 'orderTextarea';
+    orderSection.appendChild(ta);
+    const parseBtn = document.createElement('button');
+    parseBtn.className = 'parse-btn';
+    parseBtn.textContent = '파싱해서 미리보기';
+    parseBtn.addEventListener('click', ()=>{
+      const lines = ta.value.split('\n').map(l=>l.trim()).filter(Boolean);
+      if(lines.length === 0) return;
+      previewOrders = lines.map(line=>{
+        const {name, qty} = parseOrderLine(line);
+        const existing = findBestMatch(name);
+        return {
+          tempId: uid(),
+          name,
+          qty,
+          existingBookId: existing ? existing.id : null,
+          category: existing ? existing.category : inferCategory(name),
+        };
+      });
+      render();
+    });
+    orderSection.appendChild(parseBtn);
+
+    if(previewOrders && previewOrders.length > 0){
+      const preview = document.createElement('div');
+      preview.className = 'inv-preview';
+      preview.innerHTML = `<div class="preview-title">아래 권수가 맞는지 확인해주세요</div>`;
+      previewOrders.forEach((item)=>{
+        const row = document.createElement('div');
+        row.className = 'inv-preview-row';
+
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.value = item.name;
+        if(item.existingBookId){
+          nameInput.disabled = true;
+          nameInput.title = '기존 교재와 매칭됐어요. 수량만 확인해주세요.';
+        }else{
+          nameInput.addEventListener('input', ()=>{ item.name = nameInput.value; });
+        }
+        row.appendChild(nameInput);
+
+        const qtyInput = document.createElement('input');
+        qtyInput.type = 'number';
+        qtyInput.min = '1';
+        qtyInput.value = item.qty;
+        qtyInput.addEventListener('input', ()=>{ item.qty = Math.max(1, parseInt(qtyInput.value,10) || 1); });
+        row.appendChild(qtyInput);
+
+        if(item.existingBookId){
+          const existingBook = data.textbooks.find(b=>b.id===item.existingBookId);
+          const tag = document.createElement('span');
+          tag.className = 'tag-existing';
+          tag.textContent = existingBook ? `기존 · "${existingBook.name}" (${catById(existingBook.category).label})` : '기존 교재';
+          row.appendChild(tag);
+        }else{
+          const sel = document.createElement('select');
+          sel.innerHTML = CATEGORIES.map(c=>`<option value="${c.id}">${c.label}</option>`).join('');
+          sel.value = item.category;
+          sel.addEventListener('change', ()=>{ item.category = sel.value; });
+          row.appendChild(sel);
+          const newTag = document.createElement('span');
+          newTag.className = 'tag-existing';
+          newTag.textContent = '신규';
+          row.appendChild(newTag);
+        }
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'row-del';
+        delBtn.textContent = '✕';
+        delBtn.title = '이 줄 제외';
+        delBtn.addEventListener('click', ()=>{
+          previewOrders = previewOrders.filter(p=>p.tempId !== item.tempId);
+          render();
+        });
+        row.appendChild(delBtn);
+
+        preview.appendChild(row);
+      });
+
+      const actions = document.createElement('div');
+      actions.className = 'inv-preview-actions';
+      const confirmBtn = document.createElement('button');
+      confirmBtn.className = 'confirm-btn';
+      confirmBtn.textContent = `확인하고 반영 (${previewOrders.length}건)`;
+      confirmBtn.addEventListener('click', ()=>{
+        previewOrders.forEach(item=>{
+          if(item.existingBookId){
+            const book = data.textbooks.find(b=>b.id===item.existingBookId);
+            if(book) book.stock = (book.stock||0) + item.qty;
+          }else{
+            data.textbooks.push({id: uid(), name: item.name, category: item.category, stock: item.qty});
+          }
+        });
+        setStatus(`${previewOrders.length}건 재고에 반영됨`);
+        previewOrders = null;
+        render(); save();
+      });
+      actions.appendChild(confirmBtn);
+      const cancelBtn = document.createElement('button');
+      cancelBtn.className = 'cancel-btn';
+      cancelBtn.textContent = '취소';
+      cancelBtn.addEventListener('click', ()=>{ previewOrders = null; render(); });
+      actions.appendChild(cancelBtn);
+      preview.appendChild(actions);
+
+      orderSection.appendChild(preview);
+    }
+    body.appendChild(orderSection);
+
+    // 2) low stock banner
+    if(lowItems.length > 0){
+      const banner = document.createElement('div');
+      banner.className = 'low-banner';
+      banner.innerHTML = `⚠️ 재고 부족 ${lowItems.length}건<br>` + lowItems.map(b=>`· ${escapeHtml(b.name)}: ${b.stock}권`).join('<br>');
+      const kBtn = document.createElement('button');
+      kBtn.className = 'k-btn';
+      kBtn.textContent = '카카오톡 알림 문구 복사';
+      kBtn.title = '자동 전송은 아니에요 — 문구를 복사해서 카카오톡에 붙여넣기 하시면 돼요';
+      kBtn.addEventListener('click', ()=>{
+        const msg = '📦 재고 부족 안내\n' + lowItems.map(b=>`- ${b.name}: ${b.stock}권 남음`).join('\n');
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(msg)
+            .then(()=> alert('복사했어요! 카카오톡 채팅방에 붙여넣기(Ctrl+V) 하시면 바로 보낼 수 있어요.'))
+            .catch(()=> alert('복사에 실패했어요. 이 브라우저에서는 클립보드 권한이 필요할 수 있어요.'));
+        }else{ alert(msg); }
+      });
+      banner.appendChild(kBtn);
+      body.appendChild(banner);
+    }
+
+    // 3) stock list by category
+    CATEGORIES.forEach(cat=>{
+      const books = data.textbooks.filter(b=>b.category===cat.id);
+      if(books.length === 0) return;
+      const section = document.createElement('div');
+      section.className = 'inv-section';
+      section.innerHTML = `<h4>${cat.label}</h4>`;
+      books.forEach(book=>{
+        const row = document.createElement('div');
+        row.className = 'inv-item';
+        row.style.background = `var(--${cat.id}-bg)`;
+        row.draggable = true;
+        row.innerHTML = `<span class="swatch" style="background:var(--${cat.id})"></span><span class="name" style="color:var(--${cat.id}-tx)">${escapeHtml(book.name)}</span><button class="stock-btn" data-d="-1">−</button><span class="stock ${book.stock<=LOW_STOCK?'low':''}">${book.stock}</span><button class="stock-btn" data-d="1">+</button>`;
+        row.addEventListener('dragstart', (e)=>{
+          const payload = JSON.stringify({name: book.name, category: book.category, bookId: book.id});
+          e.dataTransfer.setData('application/x-book', payload);
+          e.dataTransfer.setData('text/plain', payload);
+        });
+        row.querySelectorAll('.stock-btn').forEach(btn=>{
+          btn.addEventListener('click', ()=>{
+            const d = parseInt(btn.dataset.d,10);
+            book.stock = Math.max(0, book.stock + d);
+            render(); save();
+          });
+        });
+        section.appendChild(row);
+      });
+      body.appendChild(section);
+    });
+
+    if(data.textbooks.length === 0){
+      const hint = document.createElement('div');
+      hint.className = 'empty-hint';
+      hint.textContent = '왼쪽에서 교재를 먼저 추가해주세요';
+      body.appendChild(hint);
+    }
+  }
+
+  document.getElementById('invToggleBtn').addEventListener('click', ()=>{
+    invOpen = !invOpen;
+    document.getElementById('invDrawer').classList.toggle('open', invOpen);
+  });
+  document.getElementById('invCloseBtn').addEventListener('click', ()=>{
+    invOpen = false;
+    document.getElementById('invDrawer').classList.remove('open');
+  });
+
+  // ---------------- Main: grades & students ----------------
+
+  function renderGrades(){
+    const wrap = document.getElementById('gradesWrap');
+    wrap.innerHTML = '';
+    const term = searchTerm.trim().toLowerCase();
+
+    data.grades.forEach(grade=>{
+      const matchingStudents = term
+        ? grade.students.filter(s=> s.name.toLowerCase().includes(term))
+        : grade.students;
+
+      if(term && matchingStudents.length === 0) return;
+
+      const card = document.createElement('div');
+      card.className = 'grade-card';
+
+      const head = document.createElement('div');
+      head.className = 'grade-head';
+      const left = document.createElement('h3');
+      left.innerHTML = `${escapeHtml(grade.name)} <span class="count">(${grade.students.length}명)</span>`;
+      left.addEventListener('click', ()=>{ grade.collapsed = !grade.collapsed; render(); save(); });
+      head.appendChild(left);
+
+      const right = document.createElement('div');
+      right.className = 'right';
+      const sortBtn = document.createElement('button');
+      sortBtn.className = 'sort-toggle' + (grade.sortByName ? ' active' : '');
+      sortBtn.textContent = '이름순';
+      sortBtn.addEventListener('click', ()=>{ grade.sortByName = !grade.sortByName; render(); save(); });
+      right.appendChild(sortBtn);
+      const delGrade = document.createElement('button');
+      delGrade.className = 'del-grade';
+      delGrade.textContent = '그룹 삭제';
+      delGrade.addEventListener('click', ()=>{
+        if(grade.students.length > 0 && !confirm(`${grade.name} 그룹에 학생 ${grade.students.length}명이 있습니다. 그룹을 삭제할까요?`)) return;
+        data.grades = data.grades.filter(g=>g.id!==grade.id);
+        render(); save();
+      });
+      right.appendChild(delGrade);
+      const collapseBtn = document.createElement('button');
+      collapseBtn.className = 'collapse-btn';
+      const effectivelyCollapsed = grade.collapsed && !term;
+      collapseBtn.title = effectivelyCollapsed ? '펼치기' : '접기';
+      collapseBtn.innerHTML = `<span class="chev${effectivelyCollapsed?' collapsed':''}">▾</span>`;
+      collapseBtn.addEventListener('click', ()=>{ grade.collapsed = !grade.collapsed; render(); save(); });
+      right.appendChild(collapseBtn);
+      head.appendChild(right);
+      card.appendChild(head);
+
+      if(effectivelyCollapsed){ wrap.appendChild(card); return; }
+
+      const studentsWrap = document.createElement('div');
+      studentsWrap.className = 'students';
+      studentsWrap.dataset.gradeId = grade.id;
+
+      const displayStudents = grade.sortByName
+        ? [...matchingStudents].sort((a,b)=>koSort(a.name,b.name))
+        : matchingStudents;
+
+      if(displayStudents.length === 0){
+        const hint = document.createElement('div');
+        hint.className = 'empty-hint';
+        hint.textContent = term ? '검색 결과가 없어요' : '아래에서 학생을 추가해주세요';
+        studentsWrap.appendChild(hint);
+      }
+
+      displayStudents.forEach(student=>{
+        studentsWrap.appendChild(buildStudentCard(student, grade));
+      });
+
+      if(!grade.sortByName && !term){
+        studentsWrap.addEventListener('dragover', (e)=>{
+          if(!e.dataTransfer.types.includes('text/x-student')) return;
+          e.preventDefault();
+          studentsWrap.classList.add('students-drop-hover');
+        });
+        studentsWrap.addEventListener('dragleave', (e)=>{
+          if(e.target === studentsWrap) studentsWrap.classList.remove('students-drop-hover');
+        });
+        studentsWrap.addEventListener('drop', (e)=>{
+          if(!e.dataTransfer.types.includes('text/x-student')) return;
+          e.preventDefault();
+          studentsWrap.classList.remove('students-drop-hover');
+          let payload;
+          try{ payload = JSON.parse(e.dataTransfer.getData('text/x-student')); }catch(err){ return; }
+          if(!payload) return;
+          moveStudent(payload, grade.id, null, true);
+          render(); save();
+        });
+      }
+
+      card.appendChild(studentsWrap);
+
+      const addRow = document.createElement('div');
+      addRow.className = 'add-student-row';
+      addRow.innerHTML = `<input type="text" placeholder="학생 이름 추가" maxlength="20" /><button>추가</button>`;
+      const input = addRow.querySelector('input');
+      const btn = addRow.querySelector('button');
+      const addStudent = ()=>{
+        const val = input.value.trim();
+        if(!val) return;
+        grade.students.push({id: uid(), name: val, cats: emptyCats(), memo:''});
+        input.value = '';
+        render(); save();
+      };
+      btn.addEventListener('click', addStudent);
+      input.addEventListener('keydown', (e)=>{ if(e.key==='Enter') addStudent(); });
+      card.appendChild(addRow);
+
+      wrap.appendChild(card);
+    });
+  }
+
+  function buildStudentCard(student, grade){
+    const box = document.createElement('div');
+    box.className = 'student';
+    box.dataset.studentId = student.id;
+
+    const sHead = document.createElement('div');
+    sHead.className = 'student-header';
+
+    const grip = document.createElement('span');
+    grip.className = 'grip' + (grade.sortByName ? ' disabled' : '');
+    grip.textContent = '⠿⠿';
+    grip.title = grade.sortByName ? '이름순 정렬 중에는 순서를 바꿀 수 없어요' : '끌어서 순서/학년 이동';
+    if(!grade.sortByName){
+      grip.draggable = true;
+      grip.addEventListener('dragstart', (e)=>{
+        e.dataTransfer.setData('text/x-student', JSON.stringify({studentId: student.id, gradeId: grade.id}));
+        box.classList.add('dragging');
+      });
+      grip.addEventListener('dragend', ()=> box.classList.remove('dragging'));
+    }
+    sHead.appendChild(grip);
+
+    const nameEl = document.createElement('span');
+    nameEl.className = 'name';
+    nameEl.textContent = student.name;
+    nameEl.title = '클릭해서 이름 수정';
+    nameEl.addEventListener('click', ()=>{
+      const val = prompt('학생 이름 수정', student.name);
+      if(val && val.trim()){ student.name = val.trim(); render(); save(); }
+    });
+    sHead.appendChild(nameEl);
+
+    const hasAnyMain = CATEGORIES.some(c=> student.cats[c.id].main);
+    if(!hasAnyMain){
+      const badge = document.createElement('span');
+      badge.className = 'unassigned';
+      badge.textContent = '미배정';
+      sHead.appendChild(badge);
+    }
+
+    const memoBtn = document.createElement('button');
+    memoBtn.className = 'sort-toggle' + (openMemo.has(student.id) ? ' active' : '');
+    memoBtn.textContent = '메모' + (student.memo ? ' •' : '');
+    memoBtn.addEventListener('click', ()=>{
+      if(openMemo.has(student.id)) openMemo.delete(student.id); else openMemo.add(student.id);
+      render();
+    });
+    sHead.appendChild(memoBtn);
+
+    const compBtn = document.createElement('button');
+    compBtn.className = 'sort-toggle' + (openCompleted.has(student.id) ? ' active' : '');
+    compBtn.textContent = '완료';
+    compBtn.addEventListener('click', ()=>{
+      if(openCompleted.has(student.id)) openCompleted.delete(student.id); else openCompleted.add(student.id);
+      render();
+    });
+    sHead.appendChild(compBtn);
+
+    const delStudent = document.createElement('button');
+    delStudent.className = 'del-student';
+    delStudent.title = '학생 삭제';
+    delStudent.textContent = '✕';
+    delStudent.addEventListener('click', ()=>{
+      grade.students = grade.students.filter(s=>s.id!==student.id);
+      render(); save();
+    });
+    sHead.appendChild(delStudent);
+    box.appendChild(sHead);
+
+    if(!grade.sortByName){
+      box.addEventListener('dragover', (e)=>{
+        if(!e.dataTransfer.types.includes('text/x-student')) return;
+        e.preventDefault();
+        const rect = box.getBoundingClientRect();
+        const before = (e.clientY - rect.top) < rect.height/2;
+        box.classList.toggle('insert-before', before);
+        box.classList.toggle('insert-after', !before);
+      });
+      box.addEventListener('dragleave', ()=> box.classList.remove('insert-before','insert-after'));
+      box.addEventListener('drop', (e)=>{
+        if(!e.dataTransfer.types.includes('text/x-student')) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const before = box.classList.contains('insert-before');
+        box.classList.remove('insert-before','insert-after');
+        let payload;
+        try{ payload = JSON.parse(e.dataTransfer.getData('text/x-student')); }catch(err){ return; }
+        if(!payload) return;
+        moveStudent(payload, grade.id, student.id, before);
+        render(); save();
+      });
+    }
+
+    const row = document.createElement('div');
+    row.className = 'main-sub-row';
+    row.appendChild(buildMsBox({ student, role:'main', label:'주교재' }));
+    row.appendChild(buildMsBox({ student, role:'sub', label:'부교재' }));
+    box.appendChild(row);
+
+    if(openMemo.has(student.id)){
+      const panel = document.createElement('div');
+      panel.className = 'memo-panel';
+      const ta = document.createElement('textarea');
+      ta.placeholder = '진도, 특이사항 메모';
+      ta.value = student.memo || '';
+      ta.addEventListener('input', ()=>{
+        student.memo = ta.value;
+        clearTimeout(memoSaveTimer);
+        memoSaveTimer = setTimeout(save, 500);
+      });
+      panel.appendChild(ta);
+      box.appendChild(panel);
+    }
+
+    if(openCompleted.has(student.id)){
+      box.appendChild(buildCompletedPanel(student));
+    }
+
+    return box;
+  }
+
+  function buildMsBox({student, role, label}){
+    const wrap = document.createElement('div');
+    wrap.className = 'msbox';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'box-label';
+    lbl.textContent = label;
+    wrap.appendChild(lbl);
+
+    const chips = document.createElement('div');
+    chips.className = 'chips';
+
+    const items = [];
+    CATEGORIES.forEach(cat=>{
+      const entry = student.cats[cat.id];
+      if(role === 'main' && entry.main) items.push({cat, name: entry.main});
+      if(role === 'sub') entry.subs.forEach(name => items.push({cat, name}));
+    });
+
+    if(items.length === 0){
+      const ph = document.createElement('span');
+      ph.className = 'placeholder';
+      ph.textContent = role === 'main' ? '메인 교재 놓기' : '부교재 놓기 (여러 권)';
+      chips.appendChild(ph);
+    }else{
+      items.forEach(({cat, name})=>{
+        const badge = document.createElement('span');
+        badge.className = `book-badge cat-${cat.id}`;
+        badge.draggable = true;
+        badge.innerHTML = `<span class="role">${cat.hint}</span>${escapeHtml(name)}<button class="complete-btn" title="완료로 표시">✓</button><button class="remove-btn" title="배정 해제">✕</button>`;
+
+        badge.addEventListener('dragstart', (e)=>{
+          e.dataTransfer.setData('application/x-assigned', JSON.stringify({studentId: student.id, category: cat.id, from: role, name}));
+          badge.classList.add('dragging');
+        });
+        badge.addEventListener('dragend', ()=> badge.classList.remove('dragging'));
+
+        badge.querySelector('.complete-btn').addEventListener('click', ()=>{
+          const entry = student.cats[cat.id];
+          if(role === 'main'){ entry.main = null; } else { const i = entry.subs.indexOf(name); if(i>-1) entry.subs.splice(i,1); }
+          entry.done.push({name, category:cat.id, month:monthKey()});
+          render(); save();
+        });
+        badge.querySelector('.remove-btn').addEventListener('click', ()=>{
+          const entry = student.cats[cat.id];
+          if(role === 'main'){ entry.main = null; } else { const i = entry.subs.indexOf(name); if(i>-1) entry.subs.splice(i,1); }
+          render(); save();
+        });
+
+        chips.appendChild(badge);
+      });
+    }
+    wrap.appendChild(chips);
+
+    wrap.addEventListener('dragover', (e)=>{
+      if(!e.dataTransfer.types.includes('application/x-book') && !e.dataTransfer.types.includes('application/x-assigned')) return;
+      e.preventDefault();
+      wrap.classList.add('drop-ok');
+    });
+    wrap.addEventListener('dragleave', ()=> wrap.classList.remove('drop-ok'));
+    wrap.addEventListener('drop', (e)=>{
+      wrap.classList.remove('drop-ok');
+      if(e.dataTransfer.types.includes('application/x-book')){
+        e.preventDefault();
+        let payload;
+        try{ payload = JSON.parse(e.dataTransfer.getData('application/x-book')); }catch(err){ return; }
+        if(!payload || !payload.name || !payload.category) return;
+        placeBook(student, payload.category, payload.name, role);
+        decrementStock(payload.name, payload.category);
+        render(); save();
+      }else if(e.dataTransfer.types.includes('application/x-assigned')){
+        e.preventDefault();
+        let payload;
+        try{ payload = JSON.parse(e.dataTransfer.getData('application/x-assigned')); }catch(err){ return; }
+        if(!payload || payload.studentId !== student.id) return;
+        if(payload.from === role) return;
+        const entry = student.cats[payload.category];
+        if(payload.from === 'main'){ entry.main = null; }
+        else if(payload.from === 'sub'){ const i = entry.subs.indexOf(payload.name); if(i>-1) entry.subs.splice(i,1); }
+        else if(payload.from === 'done'){ const di = entry.done.findIndex(d=>d.name===payload.name); if(di>-1) entry.done.splice(di,1); }
+        placeBook(student, payload.category, payload.name, role);
+        render(); save();
+      }
+    });
+
+    return wrap;
+  }
+
+  function buildCompletedPanel(student){
+    const panel = document.createElement('div');
+    panel.className = 'completed-panel';
+
+    const now = new Date();
+    if(!viewMonthState.has(student.id)){
+      viewMonthState.set(student.id, {year: now.getFullYear(), month: now.getMonth()+1});
+    }
+    const state = viewMonthState.get(student.id);
+
+    function stepMonth(delta){
+      if(state.month === 'legacy') return;
+      let m = state.month + delta;
+      let y = state.year;
+      if(m < 1){ m = 12; y -= 1; }
+      if(m > 12){ m = 1; y += 1; }
+      state.month = m; state.year = y;
+      render();
+    }
+
+    const nav = document.createElement('div');
+    nav.className = 'completed-nav';
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'arrow';
+    prevBtn.textContent = '◀';
+    prevBtn.title = '이전 달';
+    prevBtn.disabled = state.month === 'legacy';
+    prevBtn.addEventListener('click', ()=> stepMonth(-1));
+    nav.appendChild(prevBtn);
+
+    const ymLabel = document.createElement('div');
+    ymLabel.className = 'ym-label';
+    ymLabel.textContent = state.month === 'legacy' ? '이전 기록' : `${state.year}년 ${state.month}월`;
+    nav.appendChild(ymLabel);
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'arrow';
+    nextBtn.textContent = '▶';
+    nextBtn.title = '다음 달';
+    nextBtn.disabled = state.month === 'legacy';
+    nextBtn.addEventListener('click', ()=> stepMonth(1));
+    nav.appendChild(nextBtn);
+    panel.appendChild(nav);
+
+    const tabs = document.createElement('div');
+    tabs.className = 'month-tabs';
+    MONTH_NAMES.forEach((label, idx)=>{
+      const m = idx + 1;
+      const tabBtn = document.createElement('button');
+      tabBtn.textContent = label;
+      tabBtn.className = (state.month === m) ? 'active' : '';
+      tabBtn.addEventListener('click', ()=>{ state.month = m; render(); });
+      tabs.appendChild(tabBtn);
+    });
+    const legacyBtn = document.createElement('button');
+    legacyBtn.textContent = '이전 기록';
+    legacyBtn.className = (state.month === 'legacy') ? 'active' : '';
+    legacyBtn.addEventListener('click', ()=>{ state.month = 'legacy'; render(); });
+    tabs.appendChild(legacyBtn);
+    panel.appendChild(tabs);
+
+    const targetKey = state.month === 'legacy' ? '이전 기록' : monthKeyOf(state.year, state.month);
+
+    const list = document.createElement('div');
+    list.className = 'completed-list';
+
+    const items = [];
+    CATEGORIES.forEach(cat=>{
+      student.cats[cat.id].done.forEach(item=>{
+        if(item.month === targetKey) items.push({cat, item});
+      });
+    });
+
+    if(items.length === 0){
+      const ph = document.createElement('span');
+      ph.className = 'placeholder';
+      ph.textContent = '완료된 책이 없어요 (여기로 끌어다 놓아도 기록돼요)';
+      list.appendChild(ph);
+    }else{
+      items.forEach(({cat, item})=>{
+        const idx = student.cats[cat.id].done.indexOf(item);
+        const badge = document.createElement('span');
+        badge.className = `book-badge cat-${cat.id} done-badge`;
+        badge.innerHTML = `${escapeHtml(item.name)} <button title="완료 기록 삭제">✕</button>`;
+        badge.querySelector('button').addEventListener('click', ()=>{
+          student.cats[cat.id].done.splice(idx,1);
+          render(); save();
+        });
+        list.appendChild(badge);
+      });
+    }
+    panel.appendChild(list);
+
+    list.addEventListener('dragover', (e)=>{
+      if(!e.dataTransfer.types.includes('application/x-book') && !e.dataTransfer.types.includes('application/x-assigned')) return;
+      e.preventDefault();
+      list.classList.add('drop-ok');
+    });
+    list.addEventListener('dragleave', ()=> list.classList.remove('drop-ok'));
+    list.addEventListener('drop', (e)=>{
+      list.classList.remove('drop-ok');
+      const logKey = state.month === 'legacy' ? monthKey() : targetKey; // dropping while viewing "legacy" logs to current month instead
+      if(e.dataTransfer.types.includes('application/x-book')){
+        e.preventDefault();
+        let payload;
+        try{ payload = JSON.parse(e.dataTransfer.getData('application/x-book')); }catch(err){ return; }
+        if(!payload || !payload.name || !payload.category) return;
+        student.cats[payload.category].done.push({name: payload.name, category: payload.category, month: logKey});
+        render(); save();
+      }else if(e.dataTransfer.types.includes('application/x-assigned')){
+        e.preventDefault();
+        let payload;
+        try{ payload = JSON.parse(e.dataTransfer.getData('application/x-assigned')); }catch(err){ return; }
+        if(!payload || payload.studentId !== student.id || payload.from === 'done') return;
+        const entry = student.cats[payload.category];
+        if(payload.from === 'main'){ entry.main = null; }
+        else { const i = entry.subs.indexOf(payload.name); if(i>-1) entry.subs.splice(i,1); }
+        entry.done.push({name: payload.name, category: payload.category, month: logKey});
+        render(); save();
+      }
+    });
+
+    return panel;
+  }
+
+  function placeBook(student, category, name, role){
+    const entry = student.cats[category];
+    if(!entry) return;
+    if(role === 'main'){
+      if(entry.main && entry.main !== name && !entry.subs.includes(entry.main)) entry.subs.push(entry.main);
+      const i = entry.subs.indexOf(name); if(i>-1) entry.subs.splice(i,1);
+      entry.main = name;
+    }else{
+      if(entry.main === name) entry.main = null;
+      if(!entry.subs.includes(name)) entry.subs.push(name);
+    }
+  }
+
+  function decrementStock(name, category){
+    const book = findBookByName(name, category);
+    if(book) book.stock = Math.max(0, (book.stock||0) - 1);
+  }
+
+  function moveStudent(payload, targetGradeId, targetStudentId, before){
+    const srcGrade = data.grades.find(g=>g.id===payload.gradeId);
+    if(!srcGrade) return;
+    const fromIdx = srcGrade.students.findIndex(s=>s.id===payload.studentId);
+    if(fromIdx === -1) return;
+    const [student] = srcGrade.students.splice(fromIdx,1);
+
+    const destGrade = data.grades.find(g=>g.id===targetGradeId);
+    if(!destGrade){ srcGrade.students.splice(fromIdx,0,student); return; }
+
+    if(!targetStudentId){ destGrade.students.push(student); return; }
+    let toIdx = destGrade.students.findIndex(s=>s.id===targetStudentId);
+    if(toIdx === -1){ destGrade.students.push(student); return; }
+    if(!before) toIdx += 1;
+    destGrade.students.splice(toIdx, 0, student);
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  document.getElementById('searchInput').addEventListener('input', (e)=>{
+    searchTerm = e.target.value;
+    renderGrades();
+  });
+
+  document.getElementById('addBookBtn').addEventListener('click', ()=>{
+    const input = document.getElementById('newBookInput');
+    const catSel = document.getElementById('newBookCategory');
+    const val = input.value.trim();
+    if(!val) return;
+    data.textbooks.push({id: uid(), name: val, category: catSel.value, stock:0});
+    input.value = '';
+    render(); save();
+  });
+  document.getElementById('newBookInput').addEventListener('keydown', (e)=>{
+    if(e.key==='Enter') document.getElementById('addBookBtn').click();
+  });
+
+  document.getElementById('addGradeBtn').addEventListener('click', ()=>{
+    const input = document.getElementById('newGradeInput');
+    const val = input.value.trim();
+    if(!val) return;
+    data.grades.push({id: uid(), name: val, students: [], sortByName:false, collapsed:false});
+    input.value = '';
+    render(); save();
+  });
+  document.getElementById('newGradeInput').addEventListener('keydown', (e)=>{
+    if(e.key==='Enter') document.getElementById('addGradeBtn').click();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', ()=>{
+    if(!confirm('모든 학생·교재 데이터를 초기화할까요? 되돌릴 수 없습니다.')) return;
+    data = defaultData();
+    render(); save();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
