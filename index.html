@@ -556,8 +556,6 @@
 
           if(!data.bookSortByName){
             chip.addEventListener('dragover', (e)=>{
-              const mime = 'text/x-book-' + cat.id;
-              if(!e.dataTransfer.types.includes(mime)) return;
               e.preventDefault();
               const rect = chip.getBoundingClientRect();
               const before = (e.clientY - rect.top) < rect.height/2;
@@ -566,13 +564,14 @@
             });
             chip.addEventListener('dragleave', ()=> chip.classList.remove('insert-before','insert-after'));
             chip.addEventListener('drop', (e)=>{
-              const mime = 'text/x-book-' + cat.id;
-              if(!e.dataTransfer.types.includes(mime)) return;
               e.preventDefault();
+              const mime = 'text/x-book-' + cat.id;
+              const raw = e.dataTransfer.getData(mime);
+              if(!raw) return;
               const before = chip.classList.contains('insert-before');
               chip.classList.remove('insert-before','insert-after');
               let payload;
-              try{ payload = JSON.parse(e.dataTransfer.getData(mime)); }catch(err){ return; }
+              try{ payload = JSON.parse(raw); }catch(err){ return; }
               if(!payload || payload.bookId === book.id) return;
               reorderBook(payload.bookId, book.id, before);
               render(); save();
@@ -914,7 +913,6 @@
 
       if(!grade.sortByName && !term){
         studentsWrap.addEventListener('dragover', (e)=>{
-          if(!e.dataTransfer.types.includes('text/x-student')) return;
           e.preventDefault();
           studentsWrap.classList.add('students-drop-hover');
         });
@@ -922,11 +920,12 @@
           if(e.target === studentsWrap) studentsWrap.classList.remove('students-drop-hover');
         });
         studentsWrap.addEventListener('drop', (e)=>{
-          if(!e.dataTransfer.types.includes('text/x-student')) return;
           e.preventDefault();
           studentsWrap.classList.remove('students-drop-hover');
+          const raw = e.dataTransfer.getData('text/x-student');
+          if(!raw) return;
           let payload;
-          try{ payload = JSON.parse(e.dataTransfer.getData('text/x-student')); }catch(err){ return; }
+          try{ payload = JSON.parse(raw); }catch(err){ return; }
           if(!payload) return;
           moveStudent(payload, grade.id, null, true);
           render(); save();
@@ -1026,7 +1025,6 @@
 
     if(!grade.sortByName){
       box.addEventListener('dragover', (e)=>{
-        if(!e.dataTransfer.types.includes('text/x-student')) return;
         e.preventDefault();
         const rect = box.getBoundingClientRect();
         const before = (e.clientY - rect.top) < rect.height/2;
@@ -1035,13 +1033,14 @@
       });
       box.addEventListener('dragleave', ()=> box.classList.remove('insert-before','insert-after'));
       box.addEventListener('drop', (e)=>{
-        if(!e.dataTransfer.types.includes('text/x-student')) return;
         e.preventDefault();
         e.stopPropagation();
         const before = box.classList.contains('insert-before');
         box.classList.remove('insert-before','insert-after');
+        const raw = e.dataTransfer.getData('text/x-student');
+        if(!raw) return;
         let payload;
-        try{ payload = JSON.parse(e.dataTransfer.getData('text/x-student')); }catch(err){ return; }
+        try{ payload = JSON.parse(raw); }catch(err){ return; }
         if(!payload) return;
         moveStudent(payload, grade.id, student.id, before);
         render(); save();
@@ -1131,25 +1130,27 @@
     wrap.appendChild(chips);
 
     wrap.addEventListener('dragover', (e)=>{
-      if(!e.dataTransfer.types.includes('application/x-book') && !e.dataTransfer.types.includes('application/x-assigned')) return;
       e.preventDefault();
+      e.stopPropagation();
       wrap.classList.add('drop-ok');
     });
     wrap.addEventListener('dragleave', ()=> wrap.classList.remove('drop-ok'));
     wrap.addEventListener('drop', (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
       wrap.classList.remove('drop-ok');
-      if(e.dataTransfer.types.includes('application/x-book')){
-        e.preventDefault();
+      const bookRaw = e.dataTransfer.getData('application/x-book');
+      const assignedRaw = e.dataTransfer.getData('application/x-assigned');
+      if(bookRaw){
         let payload;
-        try{ payload = JSON.parse(e.dataTransfer.getData('application/x-book')); }catch(err){ return; }
+        try{ payload = JSON.parse(bookRaw); }catch(err){ return; }
         if(!payload || !payload.name || !payload.category) return;
         placeBook(student, payload.category, payload.name, role);
         decrementStock(payload.name, payload.category);
         render(); save();
-      }else if(e.dataTransfer.types.includes('application/x-assigned')){
-        e.preventDefault();
+      }else if(assignedRaw){
         let payload;
-        try{ payload = JSON.parse(e.dataTransfer.getData('application/x-assigned')); }catch(err){ return; }
+        try{ payload = JSON.parse(assignedRaw); }catch(err){ return; }
         if(!payload || payload.studentId !== student.id) return;
         if(payload.from === role) return;
         const entry = student.cats[payload.category];
@@ -1258,25 +1259,27 @@
     panel.appendChild(list);
 
     list.addEventListener('dragover', (e)=>{
-      if(!e.dataTransfer.types.includes('application/x-book') && !e.dataTransfer.types.includes('application/x-assigned')) return;
       e.preventDefault();
+      e.stopPropagation();
       list.classList.add('drop-ok');
     });
     list.addEventListener('dragleave', ()=> list.classList.remove('drop-ok'));
     list.addEventListener('drop', (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
       list.classList.remove('drop-ok');
       const logKey = state.month === 'legacy' ? monthKey() : targetKey; // dropping while viewing "legacy" logs to current month instead
-      if(e.dataTransfer.types.includes('application/x-book')){
-        e.preventDefault();
+      const bookRaw = e.dataTransfer.getData('application/x-book');
+      const assignedRaw = e.dataTransfer.getData('application/x-assigned');
+      if(bookRaw){
         let payload;
-        try{ payload = JSON.parse(e.dataTransfer.getData('application/x-book')); }catch(err){ return; }
+        try{ payload = JSON.parse(bookRaw); }catch(err){ return; }
         if(!payload || !payload.name || !payload.category) return;
         student.cats[payload.category].done.push({name: payload.name, category: payload.category, month: logKey});
         render(); save();
-      }else if(e.dataTransfer.types.includes('application/x-assigned')){
-        e.preventDefault();
+      }else if(assignedRaw){
         let payload;
-        try{ payload = JSON.parse(e.dataTransfer.getData('application/x-assigned')); }catch(err){ return; }
+        try{ payload = JSON.parse(assignedRaw); }catch(err){ return; }
         if(!payload || payload.studentId !== student.id || payload.from === 'done') return;
         const entry = student.cats[payload.category];
         if(payload.from === 'main'){ entry.main = null; }
